@@ -15,7 +15,6 @@ ENTITY doodle_jump IS
         game_won_state : IN STD_LOGIC;
         game_lost_state : IN STD_LOGIC;
         score_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        land_pulse : OUT STD_LOGIC;
         fall_complete : OUT STD_LOGIC;
         VGA_red : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
         VGA_green : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -211,28 +210,6 @@ BEGIN
 
     state_allows_update <= '1' WHEN (state_y = "001" OR state_y = "010") ELSE '0';
     active_update <= game_running AND state_allows_update;
-
-    land_pulse_process : PROCESS(clk_in)
-    BEGIN
-        IF rising_edge(clk_in) THEN
-            IF (game_reset = '1') THEN
-                landed_prev <= '0';
-                land_pulse <= '0';
-
-            ELSIF (active_update = '1' AND count = 0) THEN
-                landed_prev <= landed;
-
-                IF (landed = '1' AND landed_prev = '0') THEN
-                    land_pulse <= '1';
-                ELSE
-                    land_pulse <= '0';
-                END IF;
-
-            ELSE
-                land_pulse <= '0';
-            END IF;
-        END IF;
-    END PROCESS;
 
     landed_check : PROCESS(doodler_feet, doodler_x_pos, curr_platform_x, curr_platform_y, S_broken, falling)
         VARIABLE hit : STD_LOGIC;

@@ -25,7 +25,7 @@ END fsm;
 
 ARCHITECTURE Behavioral OF fsm IS
 
-    TYPE state_type IS (S0, S1, S2, S3, S4, S5);
+    TYPE state_type IS (S0, S1, S2, S3, S4);
     SIGNAL PS, NS : state_type := S0;
 
     SIGNAL reset_any : STD_LOGIC := '0';
@@ -64,7 +64,6 @@ ARCHITECTURE Behavioral OF fsm IS
             game_won_state : IN STD_LOGIC;
             game_lost_state : IN STD_LOGIC;
             score_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-            land_pulse : OUT STD_LOGIC;
             fall_complete : OUT STD_LOGIC;
             VGA_red : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
             VGA_green : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -130,7 +129,7 @@ BEGIN
     END PROCESS;
 
 
-    nextStateLogic : PROCESS(PS, start_pulse, land_pulse, fall_complete, pause_internal, score_at_target)
+    nextStateLogic : PROCESS(PS, start_pulse, fall_complete, pause_internal, score_at_target)
     BEGIN
         NS <= PS;
 
@@ -139,47 +138,35 @@ BEGIN
             -- Idle
             WHEN S0 =>
                 IF (start_pulse = '1') THEN
-                    NS <= S2;
-                END IF;
-
-            -- Landed
-            WHEN S1 =>
-                IF (pause_internal = '1') THEN
-                    NS <= S5;
-                ELSIF (score_at_target = '1') THEN
-                    NS <= S3;
-                ELSIF (fall_complete = '1') THEN
-                    NS <= S4;
-                ELSE
-                    NS <= S2;
+                    NS <= S1;
                 END IF;
 
             -- Running
-            WHEN S2 =>
+            WHEN S1 =>
                 IF (pause_internal = '1') THEN
-                    NS <= S5;
-                ELSIF (score_at_target = '1') THEN
-                    NS <= S3;
-                ELSIF (fall_complete = '1') THEN
                     NS <= S4;
-                ELSIF (land_pulse = '1') THEN
+                ELSIF (score_at_target = '1') THEN
+                    NS <= S2;
+                ELSIF (fall_complete = '1') THEN
+                    NS <= S3;
+                ELSE
                     NS <= S1;
                 END IF;
 
             -- Win
-            WHEN S3 =>
-                NS <= S3;
+            WHEN S2 =>
+                NS <= S2;
 
             -- Lose
-            WHEN S4 =>
-                NS <= S4;
+            WHEN S3 =>
+                NS <= S3;
                 
             -- Pause
-            WHEN S5 =>
+            WHEN S4 =>
                 IF (pause_internal = '0') THEN
-                    NS <= S2;
+                    NS <= S1;
                 ELSE
-                    NS <= S5;
+                    NS <= S4;
                 END IF;
 
         END CASE;
@@ -191,16 +178,15 @@ BEGIN
                "010" WHEN S2,
                "011" WHEN S3,
                "100" WHEN S4,
-               "101" WHEN S5,
                "000" WHEN OTHERS;
 
     
     game_idle_i <= '1' WHEN PS = S0 ELSE '0';
-    game_pause_i <= '1' WHEN PS = S5 ELSE '0';
+    game_running_i <= '1' WHEN PS = S1 ELSE '0';
+    game_won_i <= '1' WHEN PS = S2 ELSE '0';
+    game_lost_i <= '1' WHEN PS = S3 ELSE '0';
+    game_pause_i <= '1' WHEN PS = S4 ELSE '0';
     game_reset_i <= '1' WHEN (reset_any = '1' OR PS = S0) ELSE '0';
-    game_running_i <= '1' WHEN (PS = S1 OR PS = S2) ELSE '0';
-    game_won_i <= '1' WHEN PS = S3 ELSE '0';
-    game_lost_i <= '1' WHEN PS = S4 ELSE '0';
 
     move_left_i <= BTNL WHEN (PS = S1 OR PS = S2) ELSE '0';
     move_right_i <= BTNR WHEN (PS = S1 OR PS = S2) ELSE '0';
@@ -219,7 +205,6 @@ BEGIN
             game_won_state => game_won_i,
             game_lost_state => game_lost_i,
             score_out => score,
-            land_pulse => land_pulse,
             fall_complete => fall_complete,
             VGA_red => VGA_red,
             VGA_green => VGA_green,
