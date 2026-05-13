@@ -413,7 +413,9 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
 - Defined Platform Characteristics and Developed Randomization and Regeneration
 
 **Tuan Duc Chu**
-
+- Designed the Finite State Machine
+- Facilitated Game Logic Development
+- Researched Doodle Jump gameplay mechanism 
 
 **Michael Pearson**
 
