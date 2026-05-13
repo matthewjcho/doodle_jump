@@ -3,6 +3,9 @@
 
 Special thanks to Dr. Yett for the continued guidance throughout the semester.
 
+## Final Product
+[Our Demo](https://drive.google.com/file/d/1RpwdRJAolTALFNF-gOxxo-YhIEY-Op9s/view?usp=sharing)
+
 
 ## Project Overview
 
@@ -352,15 +355,66 @@ END pause_screen;
 - `blue` - blue output for pause screen; is high when the current pixel belongs to any pause-screen text element
 
 
-
 ## Modifications
+Developing Doodle Jump (1984) began by integrating supporting modules from _Pong_ (Lab 6). `clk_wiz_0.vhd`, `clk_wiz_0_clk_wiz.vhd`, `leddec16.vhd`, and `vga_sync.vhd` were reused as foundational components for clock generation, seven-segment display control, and VGA signal timing. Minor modifications were made to `leddec16.vhd` so that all anodes addressed by the 3-bit digit selector could support the updating scoreboard. The remaining files were left unchanged.
+
+The reused VGA synchronization structure was essential for rendering visible game elements. Notably, the `VGA_vsync` and `VGA_hsync` signals - along with the generated pixel row and column coordinates - provided the basis for drawing the doodler, platforms, and FSM-controlled screen displays. Since _Pong_ already demonstrated how color-based objects could be mapped to a VGA monitor, it provided a reliable starting point.
+
+After establishing the foundation, further game logic development proceeded with furnishing four new key mechanics.
+
+## New Implementations
+### Moore Finite State Machine
+
+
+### Doodler Jumping Mechanics
+
+
+### Platform Regeneration Using LFSR
+
+
+### FSM-Based Screen Assignments
+
 
 
 ## Conclusion
-
 ### Responsibilities
+**Matthew Cho**
+- Designed Doodler Avatar
+- Implemented Collision Logic
+- Developed Doodler Jumping Algorithm
+- Defined Platform Characteristics and Developed Randomization and Regeneration
+
+**Tuan Duc Chu**
+
+
+**Michael Pearson**
+
 
 ### Project Timeline
+**Week of 4/13**
+- Submitted project proposal and received feedback
+- Began initial research on traditional Doodle Jump video game
+- Devised a project timeline to organize blockers and track progress
+- Documented key features and methods to approach development for each feature
+- Drafted the first version of the Moore FSM
+
+**Week of 4/20**
+- Duplicated _Pong_ and began removing unnecessary file components
+- Implemented Doodle Avatar
+- Developed vertical and horizontal jump mechanics
+- Created a single instance of platform to validate jump mechanics
+- Drafted second and final version of the Moore FSM
+
+**Week of 4/27**
+- Implemented LFSR to randomize and regenerate platform instances
+- Integrated Moore FSM and modified module hierarchy
+- Modified LED display configuration
+- Developed FSM-based screen assignments
+
+**Week of 5/4**
+- Designed the poster
+- Demoed final project to friends for last-minute feedback
+- Concluded with final testing
 
 ### Difficulties
 
