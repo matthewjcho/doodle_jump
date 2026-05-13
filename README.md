@@ -368,13 +368,13 @@ A five-state FSM (Idle, Play, Pause, Win, Lose) coordinates the overall game flo
 
 - First, the screen shows a starting screen when the game first loads. 
 - BTND is pressed to transition to S0 (Idle). 
- - Then, BTN0 should be pressed to transition to S1 (Play); BTND could also be pressed while we are in S1 (Play) to transition back to S0 (Idle). 
+   - Then, BTN0 should be pressed to transition to S1 (Play); BTND could also be pressed while we are in S1 (Play) to transition back to S0 (Idle). 
 - While we are in S1 (Play), game logic is mostly implemented here. 
- - The player can press BTNU to pause the game and transition to S4 (Pause) and vice versa to transition back to S1 (Play). 
+   - The player can press BTNU to pause the game and transition to S4 (Pause) and vice versa to transition back to S1 (Play). 
 - When at S1 (Play), if the player scores a cumulative of 256 points in decimal, they will transition to S2 (Win). 
- - The screen will output: “YOU WIN” and the player can press BTND to transition back to S0 (Idle). 
+   - The screen will output: “YOU WIN” and the player can press BTND to transition back to S0 (Idle). 
 - Similarly, when at S1 (Play), if the player falls the FSM will register Fall = “1”. Then, they will transition to S3 (Lose). 
- - The screen will output: “YOU LOSE” and the player can press BTND to transition back to S0 (Idle).
+   - The screen will output: “YOU LOSE” and the player can press BTND to transition back to S0 (Idle).
 
 <img width="1165" height="832" alt="image" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
 
