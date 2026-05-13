@@ -27,6 +27,25 @@ Special thanks to Dr. Yett for the continued guidance throughout the semester.
 
 
 ## Inputs and Outputs
+### `fsm.vhd`
+The `fsm` module serves as the top-level game controller. It receives the board clock and push-button inputs, determines the current game state, and enables the corresponding game behavior. The FSM controls whether the game is idle, running, paused, won, lost, or reset. Additionally, it passes movement commands to the main game logic and routes the final visual outputs to the VGA display and seven-segment display.
+
+**Inputs**
+- `clk_in` - serves as the primary clock signal, configured at 25 MHz to provide the timing reference for state transitions, button detection, gameplay updates, VGA timing, and display refresh behavior
+- `BTNL` - moves doodler to the left; input is only passed to game logic when the FSM is in the running state
+- `BTNR` - moves doodler right; input is only passed to game logic when the FSM is in the running state
+- `BTN0` - starts the game from idle state; a rising-edge pulse is generated from this button so that a single press initiates gameplay without requiring the button to be held
+- `BTNU` - toggles pause state; pressing once pauses gameplay, and pressing it again resumes
+- `BTND` - resets the game; when asserted, the FSM returns to the idle state and the game logic resets the doodler position, score, platforms, and related gameplay signals
+
+**Outputs**
+- `VGA_red` - 4-bit red color output
+- `VGA_green` - 4-bit green color output
+- `VGA_blue` - 4-bit blue color output
+- `VGA_hsync` - horizontal synchronization signal to coordinate pixel scanning across each row of the display
+- `VGA_vsync` - vertical synchronization signal to coordinate frame refresh and movement from one frame to the next
+- `SEG7_anode` - selects which digit of the multiplexed seven-segment display is currently active; enables displayable scoreboard across multiple digits
+- `SEG7_seg` - determines which LED segments are illuminated; with `SE7_anode`, the output displays the player’s current score
 
 
 ## Modifications
