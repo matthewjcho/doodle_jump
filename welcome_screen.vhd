@@ -3,7 +3,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.STD_LOGIC_ARITH.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-ENTITY idle_screen IS
+ENTITY welcome_screen IS
     PORT (
         pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
@@ -12,9 +12,9 @@ ENTITY idle_screen IS
         green : OUT STD_LOGIC;
         blue : OUT STD_LOGIC
     );
-END idle_screen;
+END welcome_screen;
 
-ARCHITECTURE Behavioral OF idle_screen IS
+ARCHITECTURE Behavioral OF welcome_screen IS
 
     SIGNAL letters_doodle : STD_LOGIC := '0';
     SIGNAL letters_jump : STD_LOGIC := '0';

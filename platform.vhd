@@ -4,7 +4,6 @@ USE IEEE.NUMERIC_STD.ALL;
 
 ENTITY platform IS
     PORT (
-        clk_in : IN STD_LOGIC;
         v_sync : IN STD_LOGIC;
         pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);

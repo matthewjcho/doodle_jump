@@ -15,8 +15,6 @@ ENTITY lose_screen IS
 END lose_screen;
 
 ARCHITECTURE Behavioral OF lose_screen IS
-    SIGNAL placement_x : STD_LOGIC_VECTOR(10 DOWNTO 0);
-    SIGNAL placmenet_y : STD_LOGIC_VECTOR(10 DOWNTO 0);
     SIGNAL letters_you, letters_lose : STD_LOGIC;
     SIGNAL letters_on : STD_LOGIC;
     

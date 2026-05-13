@@ -15,8 +15,6 @@ ENTITY win_screen IS
 END win_screen;
 
 ARCHITECTURE Behavioral OF win_screen IS
-    SIGNAL placement_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(400, 11);
-    SIGNAL placement_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL letters_you, letters_win, exclamation_on : STD_LOGIC;
     SIGNAL letters_on : STD_LOGIC;
     

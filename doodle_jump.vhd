@@ -93,7 +93,6 @@ ARCHITECTURE Behavioral OF doodle_jump IS
 
     COMPONENT doodler IS
         PORT (
-            v_sync : IN STD_LOGIC;
             pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
             pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
             doodler_x : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
@@ -106,7 +105,6 @@ ARCHITECTURE Behavioral OF doodle_jump IS
 
     COMPONENT platform IS
         PORT (
-            clk_in : IN STD_LOGIC;
             v_sync : IN STD_LOGIC;
             pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
             pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
@@ -122,7 +120,7 @@ ARCHITECTURE Behavioral OF doodle_jump IS
         );
     END COMPONENT;
     
-    COMPONENT idle_screen IS 
+    COMPONENT welcome_screen IS 
         PORT (
             pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
             pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
@@ -465,7 +463,6 @@ BEGIN
 
     add_doodler : doodler
         PORT MAP (
-            v_sync => S_vsync,
             pixel_row => S_pixel_row,
             pixel_col => S_pixel_col,
             doodler_x => STD_LOGIC_VECTOR(doodler_x_pos),
@@ -479,7 +476,6 @@ BEGIN
     BEGIN
         add_platform : platform
             PORT MAP (
-                clk_in => clk_in,
                 v_sync => S_vsync,
                 pixel_row => S_pixel_row,
                 pixel_col => S_pixel_col,
@@ -495,7 +491,7 @@ BEGIN
             );
     END GENERATE generate_platforms;
     
-    display_idle : idle_screen
+    display_idle : welcome_screen
         PORT MAP (
             pixel_row => S_pixel_row,
             pixel_col => S_pixel_col,

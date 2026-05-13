@@ -5,7 +5,6 @@ USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 ENTITY doodler IS
     PORT (
-        v_sync : IN STD_LOGIC;
         pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         doodler_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current doodler x position
@@ -79,7 +78,7 @@ BEGIN
         ELSE
             r_foot_on <= '0';
         END IF;
-            
+        
         
         doodler_on <= head_on OR body_on OR l_eye_on OR r_eye_on OR l_foot_on OR r_foot_on;
         
