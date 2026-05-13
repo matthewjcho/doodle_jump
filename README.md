@@ -387,6 +387,20 @@ A five-state FSM (Idle, Play, Pause, Win, Lose) coordinates the overall game flo
 
 
 ### FSM-Based Screen Assignments
+The display pipeline routes one of four pixel sources to the VGA monitor based on the current game state.
+
+ - Screen modules: Four parallel RGB generators run concurrently, each producing pixel-level red/green/blue outputs indexed by pixel_row / pixel_col:
+
+  - idle_screen: start/menu graphics
+  - win_screen: victory display
+  - lose_screen: game-over display
+  - normal gameplay RGB: doodler sprite + platforms
+
+ - Final RGB mux: A combinational selector driven by the FSM state outputs (game_idle_state, game_won_state, game_lost_state). Selection priority is idle → win → lose → gameplay, so terminal states override active rendering. Default (no flag asserted) falls through to gameplay. The mux output bus is red_in[3:0], green_in[3:0], blue_in[3:0]: 4-bit per channel matching the VGA DAC resistor ladder.
+
+  - vga_sync: Consumes the muxed RGB and the pxl_clk from clk_wiz_0 to produce VGA-compliant timing: VGA_red/green/blue[3:0], VGA_hsync, VGA_vsync. It also generates the pixel_row / pixel_col counters fed back to the screen modules, and the v_sync tick used by gameplay logic for frame-rate updates.
+  - Clock: clk_wiz_0 divides the 100 MHz board clock down to the 40 MHz pixel clock required for 800×600 @ 60 Hz.
+
 <img width="1735" height="1189" alt="image" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
 
 
