@@ -232,6 +232,19 @@ The `welcome_screen` module generates the idle/welcome screen displayed before g
 - `letters_doodle`, `letters_jump`, `letters_press_btn0`, and `letters_press_btnd` divide the screen into separate text groups and are combined into `letters_on` which determines whether the current pixel should be lit
 - RGB outputs text as blue; `blue` is driven by `letters_on` while `red` and `green` remain low
 
+```
+ENTITY welcome_screen IS
+    PORT (
+        pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+        pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+        idle_state : IN STD_LOGIC;
+        red : OUT STD_LOGIC;
+        green : OUT STD_LOGIC;
+        blue : OUT STD_LOGIC
+    );
+END welcome_screen;
+```
+
 **Inputs**
 - `pixel_row` - current vertical pixel coordinate from VGA timing logic; determines whether the current pixel lies within the vertical range of the text
 - `pixel_col` - current horizontal pixel coordinate from VGA timing logic; determines whether the current pixel lies within the horizontal range of the text
