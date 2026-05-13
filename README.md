@@ -364,6 +364,8 @@ After establishing the foundation, further game logic development proceeded with
 
 ## New Implementations
 ### Moore Finite State Machine
+<img width="1165" height="832" alt="image" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
+
 
 
 ### Doodler Jumping Mechanics
@@ -373,7 +375,7 @@ After establishing the foundation, further game logic development proceeded with
 
 
 ### FSM-Based Screen Assignments
-
+<img width="1735" height="1189" alt="image" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
 
 
 ## Conclusion
