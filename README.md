@@ -415,7 +415,7 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
 **Tuan Duc Chu**
 - Designed the Finite State Machine
 - Facilitated Game Logic Development
-- COnducted research on Doodle Jump's Gameplay Mechanism
+- Conducted research on Doodle Jump's Gameplay Mechanism
 
 **Michael Pearson**
 
