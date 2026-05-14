@@ -14,19 +14,19 @@ Special thanks to Dr. Yett for the continued guidance throughout the semester.
 ## Project Overview
 
 With this project, our team set out to replicate the classic mobile game Doodle Jump in VHDL on the Nexys-A7 board. The behavior that we are trying to emulate from the game is as follows:
-    -Graphics to be displayed with VGA
-    -Doodler, the player character automatically jumps on platform once game is started
-    -Doodler can be moved left and right with BTNR and BTNL
-    -Doodler will wrap to the other side of the screen if it reaches the right or left boundary
-    -Screen automatically scrolls up as doodler jumps
-    -New platforms spawn in with random horizontal position as screen scrolls up
-    -Platforms will have stationary, disappearing, and moving behavior
-    -Score increments with each jump, to be displayed on leddec
-    -Loss state triggered when bottom of the screen hit
-    -Win triggered at 256 score
-    -Reset triggered with BTND
-    -Pause triggered with BTNU
-    -Custom screens for start, win, loss, pause
+    - Graphics to be displayed with VGA
+    - Doodler, the player character automatically jumps on platform once game is started
+    - Doodler can be moved left and right with BTNR and BTNL
+    - Doodler will wrap to the other side of the screen if it reaches the right or left boundary
+    - Screen automatically scrolls up as doodler jumps
+    - New platforms spawn in with random horizontal position as screen scrolls up
+    - Platforms will have stationary, disappearing, and moving behavior
+    - Score increments with each jump, to be displayed on leddec
+    - Loss state triggered when bottom of the screen hit
+    - Win triggered at 256 score
+    - Reset triggered with BTND
+    - Pause triggered with BTNU
+    - Custom screens for start, win, loss, pause
 
 ## Required Hardware
 <img width="600" height="600" alt="Nexys board" src="images/hardware/nexys_a7_board.webp" />
@@ -431,19 +431,19 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
 ## Conclusion
 Results​
 
--Core mechanics of Doodle Jump (1984) successfully replicated in VHDL​
--Cohesive, playable gameplay loop running on FPGA with VGA output​
+- Core mechanics of Doodle Jump (1984) successfully replicated in VHDL​
+- Cohesive, playable gameplay loop running on FPGA with VGA output​
  
 Features Omitted from the Original​
 
 -Enemy shooting — upward blaster (BTNU) for hostile sprites​ 
--High-score recording — persistent score across runs​ 
--Powerups — springs, jetpacks, propeller hats, etc.​
+- High-score recording — persistent score across runs​ 
+- Powerups — springs, jetpacks, propeller hats, etc.​
 
 Possible Refinements​
 
--Smoother vertical screen scrolling (sub-pixel or interpolated motion)​
--Score tied to height climbed rather than bounce count, matching the original's scoring model
+- Smoother vertical screen scrolling (sub-pixel or interpolated motion)​
+- Score tied to height climbed rather than bounce count, matching the original's scoring model
 
 ### Responsibilities
 **Matthew Cho**
@@ -458,9 +458,9 @@ Possible Refinements​
 - Conducted research on Doodle Jump's Gameplay Mechanism
 
 **Michael Pearson**
--Assisted with game logic development
--Implemented VGA output logic
--Developed screen states 
+- Assisted with game logic development
+- Implemented VGA output logic
+- Developed screen states 
 
 ### Project Timeline
 **Week of 4/13**
