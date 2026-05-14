@@ -434,7 +434,7 @@ Horizontal motion is handled independently and is user-managed. Button inputs, `
 ### Platform Regeneration Using LFSR
 As the doodler ascends, platforms must continuously and randomly reappear. Each platform must remain reachable while still introducing enough variation to challenge the player.
 
-Each platform is rendered to the VGA display using the current pixel coordinates produced by the VGA sync system. The [`platform` module](#platform.vhd) compares `pixel_row` and `pixel_col` against the platform’s stored x and y positions.
+Each platform is rendered to the VGA display using the current pixel coordinates produced by the VGA sync system. The [`platform` module](platform.vhd) compares `pixel_row` and `pixel_col` against the platform’s stored x and y positions.
 - The main game logic initializes eight default green platforms with fixed starting x and y coordinates.
 - As gameplay progresses, platforms move downward relative to whether the doodler has successfully landed on a platform.
 - Once a platform moves below the visible screen boundary, it is registered near the top with a new x-position, y-position, and platform type.
