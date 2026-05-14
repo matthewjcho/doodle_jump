@@ -14,6 +14,7 @@ Special thanks to Dr. Yett for the continued guidance throughout the semester.
 ## Project Overview
 
 With this project, our team set out to replicate the classic mobile game Doodle Jump in VHDL on the Nexys-A7 board. The behavior that we are trying to emulate from the game is as follows:
+
     - Graphics to be displayed with VGA
     - Doodler, the player character automatically jumps on platform once game is started
     - Doodler can be moved left and right with BTNR and BTNL
