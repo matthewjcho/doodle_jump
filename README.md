@@ -22,6 +22,8 @@ With this project, our team set out to replicate the classic mobile game Doodle 
 - Pause triggered with BTNU
 - Custom screens for start, win, loss, pause
 
+This project successfully provides smooth gameplay of a drawn avatar that jumps continuously, left or right, emulating key game features from the traditional Doodle Jump whilst offering a vintage look as often portrayed in the earlier years of game development. 
+
 
 ## Final Product
 [Live Demo](https://drive.google.com/file/d/1RpwdRJAolTALFNF-gOxxo-YhIEY-Op9s/view?usp=sharing)
