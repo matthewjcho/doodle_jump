@@ -415,7 +415,7 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
 **Tuan Duc Chu**
 - Designed the Finite State Machine
 - Facilitated Game Logic Development
-- Researched Doodle Jump gameplay mechanism 
+- COnducted research on Doodle Jump's Gameplay Mechanism
 
 **Michael Pearson**
 
@@ -447,6 +447,9 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
 - Concluded with final testing
 
 ### Difficulties
+Over the course of the project, one of the main issues that we had is integration between files such as FSM and game logic. Both files were susceptible to change due to the complex nature of the game itself. As a result, we had trouble integrating them together when they were finished individually. The finite state machine is supposed to be the game-master, but we overlooked that and added redundant states that were eventually discarded. After three modifications, we finally successfully created our FSM. 
+
+In addition to that, we also encountered issues with the game logic as small details make up the majority of the program’s success. After identifying them, we analyzed potential pathways to solve these problems and implement them. Notably, these include: screen-wrapping, score-registering, graphics. We worked our way through it by tackling bigger issues first on an importance-scale hierarchy. After successfully solving these  bigger problems, we then took a stab at solving smaller issues until the game was fully refined.
 
 
 
