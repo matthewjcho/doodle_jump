@@ -4,17 +4,26 @@
 Special thanks to Dr. Yett for the continued guidance throughout the semester.
 
 ## Final Product
-[Our Demo](https://drive.google.com/file/d/1RpwdRJAolTALFNF-gOxxo-YhIEY-Op9s/view?usp=sharing)
+[Live Demo](https://drive.google.com/file/d/1RpwdRJAolTALFNF-gOxxo-YhIEY-Op9s/view?usp=sharing)
+
+<img width="1735" height="1189" alt="welcome screen" src="images/doodle_jump_welcome.jpg" />
+<img width="1735" height="1189" alt="gameplay" src="images/doodle_jump_demo.jpg" />
+
 
 
 ## Project Overview
 
-
+## Required Hardware
+<img width="600" height="600" alt="Nexys board" src="images/hardware/nexys_a7_board.webp" />
+<img width="600" height="600" alt="power cable" src="images/hardware/usba_to_micro_usb.webp" />
+<img width="600" height="600" alt="HDMI" src="images/hardware/hdmi_cable.jpeg" />
+<img width="600" height="600" alt="HDMI to VGA" src="images/hardware/vga_to_hdmi.webp" />
 
 
 
 
 ## Usage Instructions
+
 1. Open Vivado and create a new RTL project from the Vivado Quick Start menu.
 2. Download all .vhd source files from the GitHub repository and add them during the Add Sources step.
 3. Download the doodle_jump.xdc constraints file from GitHub and add it during the Add Constraints step.
@@ -376,7 +385,7 @@ A five-state FSM (Idle, Play, Pause, Win, Lose) coordinates the overall game flo
 - Similarly, when at S1 (Play), if the player falls the FSM will register Fall = “1”. Then, they will transition to S3 (Lose). 
    - The screen will output: “YOU LOSE” and the player can press BTND to transition back to S0 (Idle).
 
-<img width="1165" height="832" alt="image" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
+<img width="800" height="532" alt="moore fsm" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
 
 
 
@@ -401,7 +410,7 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
     - vga_sync: Consumes the muxed RGB and the pxl_clk from clk_wiz_0 to produce VGA-compliant timing: VGA_red/green/blue[3:0], VGA_hsync, VGA_vsync. It also generates the pixel_row / pixel_col counters fed back to the screen modules, and the v_sync tick used by gameplay logic for frame-rate updates.
     - Clock: clk_wiz_0 divides the 100 MHz board clock down to the 40 MHz pixel clock required for 800×600 @ 60 Hz.
 
-<img width="1735" height="1189" alt="image" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
+<img width="1735" height="1189" alt="high-level display workflow" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
 
 
 ## Conclusion
