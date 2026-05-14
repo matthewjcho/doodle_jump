@@ -3,6 +3,26 @@
 
 Special thanks to Dr. Yett for the continued guidance throughout the semester.
 
+
+## Project Overview
+<img width="300" height="400" alt="traditional doodle jump gameplay" src="images/doodle_jump_traditional.png" />
+
+With this project, our team set out to replicate the classic mobile game Doodle Jump in VHDL on the Nexys A7 board. The behavior that we are trying to emulate from the game is as follows:
+- Graphics to be displayed with VGA
+- Doodler, the player character automatically jumps on platform once game is started
+- Doodler can be moved left and right with BTNR and BTNL
+- Doodler will wrap to the other side of the screen if it reaches the right or left boundary
+- Screen automatically scrolls up as doodler jumps
+- New platforms spawn in with random horizontal position as screen scrolls up
+- Platforms will have stationary, disappearing, and moving behavior
+- Score increments with each jump, to be displayed on leddec
+- Loss state triggered when bottom of the screen hit
+- Win triggered at 256 score
+- Reset triggered with BTND
+- Pause triggered with BTNU
+- Custom screens for start, win, loss, pause
+
+
 ## Final Product
 [Live Demo](https://drive.google.com/file/d/1RpwdRJAolTALFNF-gOxxo-YhIEY-Op9s/view?usp=sharing)
 
@@ -10,36 +30,25 @@ Special thanks to Dr. Yett for the continued guidance throughout the semester.
 <img width="1735" height="1189" alt="gameplay" src="images/doodle_jump_demo.jpg" />
 
 
-
-## Project Overview
-
-With this project, our team set out to replicate the classic mobile game Doodle Jump in VHDL on the Nexys-A7 board. The behavior that we are trying to emulate from the game is as follows:
-
-    - Graphics to be displayed with VGA
-    - Doodler, the player character automatically jumps on platform once game is started
-    - Doodler can be moved left and right with BTNR and BTNL
-    - Doodler will wrap to the other side of the screen if it reaches the right or left boundary
-    - Screen automatically scrolls up as doodler jumps
-    - New platforms spawn in with random horizontal position as screen scrolls up
-    - Platforms will have stationary, disappearing, and moving behavior
-    - Score increments with each jump, to be displayed on leddec
-    - Loss state triggered when bottom of the screen hit
-    - Win triggered at 256 score
-    - Reset triggered with BTND
-    - Pause triggered with BTNU
-    - Custom screens for start, win, loss, pause
-
 ## Required Hardware
 <img width="600" height="600" alt="Nexys board" src="images/hardware/nexys_a7_board.webp" />
+
+Nexys A7 AMD Artix™ 7 FPGA Trainer Board
+
 <img width="600" height="600" alt="power cable" src="images/hardware/usba_to_micro_usb.webp" />
+
+Micro USB Cable
+
 <img width="600" height="600" alt="HDMI" src="images/hardware/hdmi_cable.jpeg" />
+
+HDMI Cable
+
 <img width="600" height="600" alt="HDMI to VGA" src="images/hardware/vga_to_hdmi.webp" />
 
-
+HDMI to VGA Adapter
 
 
 ## Usage Instructions
-
 1. Open Vivado and create a new RTL project from the Vivado Quick Start menu.
 2. Download all .vhd source files from the GitHub repository and add them during the Add Sources step.
 3. Download the doodle_jump.xdc constraints file from GitHub and add it during the Add Constraints step.
@@ -52,6 +61,7 @@ With this project, our team set out to replicate the classic mobile game Doodle 
 10. Once programming is complete, Doodle Jump (1984) should appear on the connected monitor.
 
 ## Module Hierarchy
+<img width="532" height="800" alt="module hierarchy" src="images/hierarchy_module.png" />
 
 
 ## Inputs and Outputs
@@ -389,60 +399,79 @@ After establishing the foundation, further game logic development proceeded with
 
 ## New Implementations
 ### Moore Finite State Machine
-A five-state FSM (Idle, Play, Pause, Win, Lose) coordinates the overall game flow. Idle holds all gameplay logic frozen until the user starts a session. Play runs the main loop while monitoring the landing pulse and fall-complete signal from the collision module. Reaching the target score transitions the machine to Win, and a completed fall transitions it to Lose. Both Win and Lose return to Idle on reset. Pause provides a clean suspend/resume path without disturbing the player position or platform module. User inputs on BTN0, BTNU, and BTND drive the remaining transitions for start, pause, and reset, respectively. The FSM owns all start/restart authority and acts as the game-master.
+A five-state FSM (Idle, Play, Pause, Win, Lose) coordinates the overall game flow. Idle holds all gameplay logic frozen until the user starts a session. Play runs the main loop while monitoring the landing pulse and fall-complete signal from the collision module. Reaching the target score transitions the machine to Win, and a completed fall transitions it to Lose. Both Win and Lose return to Idle on reset. Pause provides a clean suspend/resume path without disturbing the player position or platform module. User inputs on `BTN0`, `BTNU`, and `BTND` drive the remaining transitions for start, pause, and reset, respectively. The FSM owns all start/restart authority and acts as the game-master.
 
 - First, the screen shows a starting screen when the game first loads. 
-- BTND is pressed to transition to S0 (Idle). 
-   - Then, BTN0 should be pressed to transition to S1 (Play); BTND could also be pressed while we are in S1 (Play) to transition back to S0 (Idle). 
-- While we are in S1 (Play), game logic is mostly implemented here. 
-   - The player can press BTNU to pause the game and transition to S4 (Pause) and vice versa to transition back to S1 (Play). 
-- When at S1 (Play), if the player scores a cumulative of 256 points in decimal, they will transition to S2 (Win). 
-   - The screen will output: “YOU WIN” and the player can press BTND to transition back to S0 (Idle). 
-- Similarly, when at S1 (Play), if the player falls the FSM will register Fall = “1”. Then, they will transition to S3 (Lose). 
-   - The screen will output: “YOU LOSE” and the player can press BTND to transition back to S0 (Idle).
+- `BTND` is pressed to transition to S0 (Idle). 
+   - Then, `BTN0` should be pressed to transition to `S1` (Play); `BTND` could also be pressed while we are in `S1` (Play) to transition back to `S0` (Idle). 
+- While we are in `S1` (Play), game logic is mostly implemented here. 
+   - The player can press `BTNU` to pause the game and transition to `S4` (Pause) and vice versa to transition back to `S1` (Play). 
+- When at `S1` (Play), if the player scores a cumulative of 256 points in decimal, they will transition to `S2` (Win). 
+   - The screen will output: “YOU WIN” and the player can press `BTND` to transition back to `S0` (Idle). 
+- Similarly, when at `S1` (Play), if the player falls the FSM will register `fall_complete = '1'`. Then, they will transition to `S3` (Lose). 
+   - The screen will output: “YOU LOSE” and the player can press `BTND` to transition back to `S0` (Idle).
 
 <img width="800" height="532" alt="moore fsm" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
 
 
-
 ### Doodler Jumping Mechanics
+The doodler’s vertical motion was designed to resemble a similar jump behavior as seen in the original game: a speedy initial ascent, a slower ascent near the peak, and a falling phase. To implement this behavior, `jump_count` was introduced, incrementing during each game update and determining how the doodler’s y position changes over time.
+
+- Because VGA coordinates increase downward, subtracting from the y position moves the doodler upward, while adding to the y position moves it downward. 
+    - During the first phase, when `jump_count` ranges from 0 to 7, the doodler moves upward quickly by decreasing its y position by 15 pixels.
+    - During the second phase, when `jump_count` ranges from 8 to 15, the doodler continues upward more slowly by decreasing its y position by 5 pixels.
+    - Once `jump_count` reaches 16 or greater, the doodler enters the falling phase, increasing its y position by 8 pixels.
+- Landing on a platform resets `jump_count` to zero, restarting the jump cycle and creating the appearance of continuous bouncing.
+    - Landing behavior is driven by collision detection between the doodler’s feet and the active platform positions.
+    - Each successful contact triggers a new jump sequence, while missing a platform drives falling.
+
+Horizontal motion is handled independently and is user-managed. Button inputs, `BTNL` and `BTNR` control movement to the left and right respectively, allowing for seamless reposition during ascent and descent. In addition, screen wrapping was implemented so that the doodler can exit one side of the screen and reappear on the opposite side.
+
+<img width="800" height="532" alt="visual concept of jumping alg" src="images/jump_alg_diagram.png" />
 
 
 ### Platform Regeneration Using LFSR
+As the doodler ascends, platforms must continuously and randomly reappear. Each platform must remain reachable while still introducing enough variation to challenge the player.
+
+Each platform is rendered to the VGA display using the current pixel coordinates produced by the VGA sync system. The [`platform` module](#platform.vhd) compares `pixel_row` and `pixel_col` against the platform’s stored x and y positions.
+- The main game logic initializes eight default green platforms with fixed starting x and y coordinates.
+- As gameplay progresses, platforms move downward relative to whether the doodler has successfully landed on a platform.
+- Once a platform moves below the visible screen boundary, it is registered near the top with a new x-position, y-position, and platform type.
+
+The randomness is driven by a 16-bit LFSR initialized with an arbitrary value of `X”ACE1”`. An LFSR is a shift register that updates its state by shifting its bits and computing a new bit of selected existing bits. 
+- The feedback bit is generated using the XOR of selected positions from the current LFSR state.
+- Each update produces a new pseudo-random bit pattern, which can then be indexed and converted into numerical values used to generate horizontal offsets, vertical spawn locations, and platform types.
+
+Though deterministic, platform regeneration appears random during gameplay and is hardware-efficient, allowing the same hardware mechanism to control multiple randomized gameplay features.
 
 
 ### FSM-Based Screen Assignments
 The display pipeline routes one of four pixel sources to the VGA monitor based on the current game state.
 
- - Screen modules: Four parallel RGB generators run concurrently, each producing pixel-level red/green/blue outputs indexed by pixel_row / pixel_col:
+ - Screen Modules - four parallel RGB generators run concurrently, each producing pixel-level red/green/blue outputs indexed by `pixel_row` and `pixel_col`:
+    - [idle_screen](welcome_screen.vhd) - start/menu graphics
+    - [win_screen](win_screen.vhd) - victory display
+    - [lose_screen](lose_screen.vhd) - game over display
+    - Running Gameplay RGB - doodler sprite + platforms
 
-    - idle_screen: start/menu graphics
-    - win_screen: victory display
-    - lose_screen: game-over display
-    - normal gameplay RGB: doodler sprite + platforms
-
- - Final RGB mux: A combinational selector driven by the FSM state outputs (game_idle_state, game_won_state, game_lost_state). Selection priority is idle → win → lose → gameplay, so terminal states override active rendering. Default (no flag asserted) falls through to gameplay. The mux output bus is red_in[3:0], green_in[3:0], blue_in[3:0]: 4-bit per channel matching the VGA DAC resistor ladder.
-
-    - vga_sync: Consumes the muxed RGB and the pxl_clk from clk_wiz_0 to produce VGA-compliant timing: VGA_red/green/blue[3:0], VGA_hsync, VGA_vsync. It also generates the pixel_row / pixel_col counters fed back to the screen modules, and the v_sync tick used by gameplay logic for frame-rate updates.
-    - Clock: clk_wiz_0 divides the 100 MHz board clock down to the 40 MHz pixel clock required for 800×600 @ 60 Hz.
+ - Final RGB Mux: A combinational selector driven by the FSM state outputs (`game_idle_state`, `game_won_state`, `game_lost_state`). Selection priority is idle → win → lose → gameplay, so terminal states override active rendering. Default (no flag asserted) falls through to gameplay. The mux output bus is `red_in[3:0]`, `green_in[3:0]`, `blue_in[3:0]`: 4-bit per channel matching the VGA DAC resistor ladder.
+    - `vga_sync` - Consumes the muxed RGB and the `pxl_clk` from `clk_wiz_0` to produce VGA-compliant timing: VGA_red/green/blue[3:0], `VGA_hsync`, `VGA_vsync`. It also generates the `pixel_row` / `pixel_col` counters fed back to the screen modules, and the `v_sync` tick used by gameplay logic for frame-rate updates.
+    - `Clock` - clk_wiz_0 divides the 100 MHz board clock down to the 40 MHz pixel clock required for 800×600 @ 60 Hz.
 
 <img width="1735" height="1189" alt="high-level display workflow" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
 
 
 ## Conclusion
 Results​
-
 - Core mechanics of Doodle Jump (1984) successfully replicated in VHDL​
 - Cohesive, playable gameplay loop running on FPGA with VGA output​
  
 Features Omitted from the Original​
-
 - Enemy shooting — upward blaster (BTNU) for hostile sprites​ 
 - High-score recording — persistent score across runs​ 
 - Powerups — springs, jetpacks, propeller hats, etc.​
 
 Possible Refinements​
-
 - Smoother vertical screen scrolling (sub-pixel or interpolated motion)​
 - Score tied to height climbed rather than bounce count, matching the original's scoring model
 
@@ -462,6 +491,7 @@ Possible Refinements​
 - Assisted with game logic development
 - Implemented VGA output logic
 - Developed screen states 
+
 
 ### Project Timeline
 **Week of 4/13**
@@ -489,13 +519,8 @@ Possible Refinements​
 - Demoed final project to friends for last-minute feedback
 - Concluded with final testing
 
+
 ### Difficulties
 Over the course of the project, one of the main issues that we had is integration between files such as FSM and game logic. Both files were susceptible to change due to the complex nature of the game itself. As a result, we had trouble integrating them together when they were finished individually. The finite state machine is supposed to be the game-master, but we overlooked that and added redundant states that were eventually discarded. After three modifications, we finally successfully created our FSM. 
 
 In addition to that, we also encountered issues with the game logic as small details make up the majority of the program’s success. After identifying them, we analyzed potential pathways to solve these problems and implement them. Notably, these include: screen-wrapping, score-registering, graphics. We worked our way through it by tackling bigger issues first on an importance-scale hierarchy. After successfully solving these  bigger problems, we then took a stab at solving smaller issues until the game was fully refined.
-
-
-
-
-
-
