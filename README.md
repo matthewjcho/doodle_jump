@@ -437,7 +437,7 @@ Results​
  
 Features Omitted from the Original​
 
--Enemy shooting — upward blaster (BTNU) for hostile sprites​ 
+- Enemy shooting — upward blaster (BTNU) for hostile sprites​ 
 - High-score recording — persistent score across runs​ 
 - Powerups — springs, jetpacks, propeller hats, etc.​
 
