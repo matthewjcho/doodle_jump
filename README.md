@@ -26,24 +26,24 @@ With this project, our team set out to replicate the classic mobile game Doodle 
 ## Final Product
 [Live Demo](https://drive.google.com/file/d/1RpwdRJAolTALFNF-gOxxo-YhIEY-Op9s/view?usp=sharing)
 
-<img width="1735" height="1189" alt="welcome screen" src="images/doodle_jump_welcome.jpg" />
-<img width="1735" height="1189" alt="gameplay" src="images/doodle_jump_demo.jpg" />
+<img width="835" height="489" alt="welcome screen" src="images/doodle_jump_welcome.jpg" />
+<img width="835" height="489" alt="gameplay" src="images/doodle_jump_demo.jpg" />
 
 
 ## Required Hardware
-<img width="600" height="600" alt="Nexys board" src="images/hardware/nexys_a7_board.webp" />
+<img width="300" height="300" alt="Nexys board" src="images/hardware/nexys_a7_board.webp" />
 
 Nexys A7 AMD Artix™ 7 FPGA Trainer Board
 
-<img width="600" height="600" alt="power cable" src="images/hardware/usba_to_micro_usb.webp" />
+<img width="300" height="300" alt="power cable" src="images/hardware/usba_to_micro_usb.webp" />
 
 Micro USB Cable
 
-<img width="600" height="600" alt="HDMI" src="images/hardware/hdmi_cable.jpeg" />
+<img width="300" height="300" alt="HDMI" src="images/hardware/hdmi_cable.jpeg" />
 
 HDMI Cable
 
-<img width="600" height="600" alt="HDMI to VGA" src="images/hardware/vga_to_hdmi.webp" />
+<img width="300" height="300" alt="HDMI to VGA" src="images/hardware/vga_to_hdmi.webp" />
 
 HDMI to VGA Adapter
 
@@ -393,9 +393,10 @@ END pause_screen;
 ## Modifications
 Developing Doodle Jump (1984) began by integrating supporting modules from _Pong_ (Lab 6). `clk_wiz_0.vhd`, `clk_wiz_0_clk_wiz.vhd`, `leddec16.vhd`, and `vga_sync.vhd` were reused as foundational components for clock generation, seven-segment display control, and VGA signal timing. Minor modifications were made to `leddec16.vhd` so that all anodes addressed by the 3-bit digit selector could support the updating scoreboard. The remaining files were left unchanged.
 
-The reused VGA synchronization structure was essential for rendering visible game elements. Notably, the `VGA_vsync` and `VGA_hsync` signals - along with the generated pixel row and column coordinates - provided the basis for drawing the doodler, platforms, and FSM-controlled screen displays. Since _Pong_ already demonstrated how color-based objects could be mapped to a VGA monitor, it provided a reliable starting point.
+The reused VGA synchronization structure was essential to render visible game elements. Notably, the `VGA_vsync` and `VGA_hsync` signals - along with the generated pixel row and column coordinates - provided the basis for drawing the doodler, platforms, and FSM-controlled screen displays. Since _Pong_ already demonstrated how color-based objects could be mapped to a VGA monitor, it provided a reliable starting point.
 
-After establishing the foundation, further game logic development proceeded with furnishing four new key mechanics.
+After establishing the foundation, further game logic development proceeded with furnishing four new key implementations.
+
 
 ## New Implementations
 ### Moore Finite State Machine
@@ -411,7 +412,7 @@ A five-state FSM (Idle, Play, Pause, Win, Lose) coordinates the overall game flo
 - Similarly, when at `S1` (Play), if the player falls the FSM will register `fall_complete = '1'`. Then, they will transition to `S3` (Lose). 
    - The screen will output: “YOU LOSE” and the player can press `BTND` to transition back to `S0` (Idle).
 
-<img width="800" height="532" alt="moore fsm" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
+<img width="500" height="332" alt="moore fsm" src="https://github.com/user-attachments/assets/61bc8dac-f875-43b6-9ba0-7d405c471897" />
 
 
 ### Doodler Jumping Mechanics
@@ -427,7 +428,7 @@ The doodler’s vertical motion was designed to resemble a similar jump behavior
 
 Horizontal motion is handled independently and is user-managed. Button inputs, `BTNL` and `BTNR` control movement to the left and right respectively, allowing for seamless reposition during ascent and descent. In addition, screen wrapping was implemented so that the doodler can exit one side of the screen and reappear on the opposite side.
 
-<img width="800" height="532" alt="visual concept of jumping alg" src="images/jump_alg_diagram.png" />
+<img width="500" height="332" alt="visual concept of jumping alg" src="images/jump_alg_diagram.png" />
 
 
 ### Platform Regeneration Using LFSR
@@ -458,7 +459,7 @@ The display pipeline routes one of four pixel sources to the VGA monitor based o
     - `vga_sync` - Consumes the muxed RGB and the `pxl_clk` from `clk_wiz_0` to produce VGA-compliant timing: VGA_red/green/blue[3:0], `VGA_hsync`, `VGA_vsync`. It also generates the `pixel_row` / `pixel_col` counters fed back to the screen modules, and the `v_sync` tick used by gameplay logic for frame-rate updates.
     - `Clock` - clk_wiz_0 divides the 100 MHz board clock down to the 40 MHz pixel clock required for 800×600 @ 60 Hz.
 
-<img width="1735" height="1189" alt="high-level display workflow" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
+<img width="800" height="532" alt="high-level display workflow" src="https://github.com/user-attachments/assets/40a786f1-d7df-42f7-a6c5-2dd8e670849b" />
 
 
 ## Conclusion
@@ -467,9 +468,9 @@ Results​
 - Cohesive, playable gameplay loop running on FPGA with VGA output​
  
 Features Omitted from the Original​
-- Enemy shooting — upward blaster (BTNU) for hostile sprites​ 
-- High-score recording — persistent score across runs​ 
-- Powerups — springs, jetpacks, propeller hats, etc.​
+- Enemy shooting - upward blaster (BTNU) for hostile sprites​ 
+- High-score recording - persistent score across runs​ 
+- Powerups - springs, jetpacks, propeller hats, etc.​
 
 Possible Refinements​
 - Smoother vertical screen scrolling (sub-pixel or interpolated motion)​
